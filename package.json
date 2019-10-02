@@ -1,0 +1,31 @@
+{
+  "name": "rulesbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx ts-node src/index.ts",
+    "dev": "DATABASE_URL=postgres://postgres:postgres@localhost:5432/rules_dev heroku local",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
+    "typeorm": "ts-node -r ./ormconfig.ts ./node_modules/.bin/typeorm",
+    "migration:generate": "npm run typeorm -- migration:generate --connection  --name ",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "3.3.0",
+    "@types/node": "^8.0.29",
+    "typescript": "3.3.3333"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "express": "^4.17.1",
+    "pg": "^7.12.1",
+    "reflect-metadata": "^0.1.10",
+    "telegraf": "^3.32.0",
+    "typeorm": "0.2.19"
+  }
+}

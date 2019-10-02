@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rules_dev
+    ports: 
+      - 5432:5432
+  
+  pga:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: pwdpwd
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "8089:80"
+  
