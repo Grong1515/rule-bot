@@ -1,6 +1,5 @@
 import RuleService from '../services/RuleService';
 import PollService from '../services/PollService';
-import { Context } from 'vm';
 
 
 export default function (bot) {
