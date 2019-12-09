@@ -15,7 +15,7 @@ export default function (bot) {
     // to prevent from that https://github.com/telegraf/telegraf/issues/420
     ctx.webhookReply = false;
     if (ctx.chat.type === 'private') return ctx.reply('Тут нельзя, надо в групповом чате');
-    let text = ctx.message.text.slice(9);
+    let text = ctx.state.command.args;
     if (!text) return ctx.reply('неа');
 
     ruleService.requestAddRule(text, ctx.chat, await ctx.telegram.getChatMembersCount(ctx.chat.id))
