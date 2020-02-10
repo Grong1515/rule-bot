@@ -17,9 +17,9 @@ export default function (bot) {
 
     const keyboard = Markup
       .keyboard(rules.map((el, i) => [`${i+1}. ${el.text}`]))
-      // .oneTime()
-      // .resize()
-      // .extra()
+      .oneTime()
+      .resize()
+      .extra()
 
     return ctx.reply(msg, keyboard);
   })
