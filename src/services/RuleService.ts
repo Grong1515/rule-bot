@@ -10,11 +10,9 @@ export default class RuleService {
   private readonly ruleRepository = getRepository(Rule);
   private readonly pollRepository = getRepository(Poll);
 
-  async listChatRules(chat: Chat): Promise<string> {
-    let rules = await this.ruleRepository.find({chat: chat.id, active: true});
-    return `Правила клуба ${chat.title}:\n\n` + (rules.map((el, i) => {
-      return `${i+1}. ${el.text}`;
-    }).join('\n') || "Пока ничего нет.");
+  async listChatRules(chat: Chat): Promise<Rule[]> {
+    const rules = await this.ruleRepository.find({chat: chat.id, active: true});
+    return rules;
   }
 
   async requestAddRule(text: string, chat: Chat, members: number) {

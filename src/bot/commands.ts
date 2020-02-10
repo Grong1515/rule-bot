@@ -1,3 +1,5 @@
+import { Markup, Extra } from 'telegraf'
+
 import RuleService from '../services/RuleService';
 import PollService from '../services/PollService';
 
@@ -7,7 +9,19 @@ export default function (bot) {
   const pollService = new PollService();
 
   bot.command("rules", async (ctx) => {
-    return ctx.reply(await ruleService.listChatRules(ctx.chat));
+    const rules = await ruleService.listChatRules(ctx.chat);
+
+    const msg = `Правила клуба ${ctx.chat.title}:\n\n` + (rules.map((el, i) => {
+      return `${i+1}. ${el.text}`;
+    }).join('\n') || "Пока ничего нет.")
+
+    const keyboard = Markup
+      .keyboard(rules.map((el, i) => [`${i+1}. ${el.text}`]))
+      // .oneTime()
+      // .resize()
+      // .extra()
+
+    return ctx.reply(msg, keyboard);
   })
 
 
@@ -40,5 +54,13 @@ export default function (bot) {
     return await pollService.handleRuleVotion(ctx.poll).then(async shouldClose => {
       shouldClose && ctx.telegram.stopPoll(poll.chat, poll.message);
     })
+  })
+
+  bot.hears(/(\d+) правило/, async ({match, chat, reply, message}) => {
+    const rules = await ruleService.listChatRules(chat);
+    const index = Number(match[1]) - 1;
+    
+    if (index < 0 || rules.length <= index) return;
+    reply(`${index+1}. ${rules[index].text} ☝️`, Extra.inReplyTo(message.message_id))
   })
 }
