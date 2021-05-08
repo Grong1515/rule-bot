@@ -27,6 +27,6 @@
     "reflect-metadata": "^0.1.10",
     "telegraf": "^3.32.0",
     "telegraf-command-parts": "^1.0.3",
-    "typeorm": "0.2.19"
+    "typeorm": "0.2.25"
   }
 }
