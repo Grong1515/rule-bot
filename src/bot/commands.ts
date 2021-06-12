@@ -1,13 +1,14 @@
-import { Markup, Extra } from 'telegraf'
+import Telegraf, { Markup, Extra, ContextMessageUpdate } from 'telegraf'
 
 import RuleService from '../services/RuleService';
 import PollService from '../services/PollService';
 
 
-export default function (bot) {
-  const ruleService = new RuleService();
-  const pollService = new PollService();
-
+export default function (
+  bot: Telegraf<ContextMessageUpdate>,
+  ruleService: RuleService,
+  pollService: PollService
+) {
   bot.command("rules", async (ctx) => {
     const rules = await ruleService.listChatRules(ctx.chat);
 
@@ -57,10 +58,12 @@ export default function (bot) {
   })
 
   bot.hears(/(\d+) правило/, async ({match, chat, reply, message}) => {
+    const replyTo = message.reply_to_message?.message_id;
+    console.log(JSON.stringify(message), replyTo, replyTo || message.message_id)
     const rules = await ruleService.listChatRules(chat);
     const index = Number(match[1]) - 1;
     
     if (index < 0 || rules.length <= index) return;
-    reply(`${index+1}. ${rules[index].text} ☝️`, Extra.inReplyTo(message.message_id))
+    reply(`${index+1}. ${rules[index].text} ☝️`, Extra.inReplyTo(replyTo || message.message_id))
   })
 }

@@ -1,3 +1,4 @@
+console.log('index file ')
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 import express = require('express');
@@ -5,6 +6,7 @@ const config = require('../ormconfig');
 
 const expressApp: express.Application = express();
 
+console.log(config);
 createConnection(config).then(async connection => {
     const bot = require('./bot');
 

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx ts-node src/index.ts",
-    "dev": "DATABASE_URL=postgres://postgres:postgres@localhost:5432/rules_dev heroku local",
+    "dev": "DATABASE_URL=postgres://postgres:postgres@localhost:5432/rules_dev npm run start",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
     "typeorm": "ts-node -r ./ormconfig.ts ./node_modules/.bin/typeorm",
     "migration:generate": "npm run typeorm -- migration:generate --connection  --name ",
