@@ -8,6 +8,6 @@ export default {
   type: 'postgresql',
   clientUrl: process.env.DATABASE_URL,
   migrations: {
-    path: './src/migrations',
+    path: `${__dirname}/migrations`,
   },
 } as Options<IDatabaseDriver<Connection>>;
