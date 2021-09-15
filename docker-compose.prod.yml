@@ -15,8 +15,12 @@ services:
       LETSENCRYPT_HOST: rules.vgrong.com
     networks:
       - global
+      - proxy
 
 networks:
   global:
     external:
       name: global
+  proxy:
+    external:
+      name: proxy
