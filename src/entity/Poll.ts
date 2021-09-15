@@ -1,37 +1,28 @@
-import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, PrimaryColumn} from "typeorm";
-import Rule from "./Rule";
+import { Entity, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Rule } from './Rule';
 
 @Entity()
-export default class Poll {
+export class Poll {
 
-    @PrimaryColumn()
-    id: string;
+  @PrimaryKey()
+  id!: string;
 
-    @OneToOne(type => Rule, {
-        cascade: true,
-        eager: true
-    })
-    @JoinColumn()
-    rule: Rule;
+  @Property()
+  message!: number;
 
-    @Column()
-    message: number;
+  @Property()
+  chat!: number;
 
-    @Column()
-    chat: number;
+  @Property()
+  yes: number = 0;
 
-    @Column()
-    members: number;
+  @Property()
+  no: number = 0;
 
-    @Column({
-        default: 0
-    })
-    yes: number;
+  @OneToOne({ entity: () => Rule, fieldName: 'ruleId', nullable: true, unique: 'REL_d089da274b098014a8e565e244' })
+  rule?: Rule;
 
-    @Column({
-        default: 0
-    })
-    no: number;
+  @Property()
+  members!: number;
 
 }
-

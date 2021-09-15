@@ -1,21 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
 @Entity()
-export default class Rule {
+export class Rule {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryKey()
+  id!: number;
 
-    @Column()
-    text: string;
+  @Property()
+  text!: string;
 
-    @Column()
-    chat: number;
+  @Property()
+  chat!: number;
 
-    @Column({
-        default: false
-    })
-    active: boolean;
+  @Property()
+  active: boolean = false;
 
 }
-

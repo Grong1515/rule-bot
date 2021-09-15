@@ -2,22 +2,33 @@ version: '3.1'
 
 services:
 
+  app:
+    container_name: rules_bot
+    build:
+      context: .
+    # restart: "always"
+    volumes:
+      - ./src:/app/src
+    depends_on: 
+      - db
+    env_file: .env
+    expose: 
+      - 3000
+    environment:
+      VIRTUAL_HOST: rules.dev.vgrong.com
+      LETSENCRYPT_HOST: rules.dev.vgrong.com
+
   db:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rules_dev
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+      - ./dump1.sql:/var/dumps
     ports: 
       - 5432:5432
-  
-  pga:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: pwdpwd
-    volumes:
-      - ./pgadmin:/var/lib/pgadmin
-    ports:
-      - "8089:80"
-  
+
+volumes:
+  database-data:
