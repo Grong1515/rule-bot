@@ -1,12 +1,8 @@
 FROM node:15-alpine as builder
 
 WORKDIR /app
-COPY package.json package.json
-RUN npm i && npm run build
 COPY . .
-
-ENTRYPOINT ["npm", "run"]
-CMD ["dev"]
+RUN npm i && npm run build
 
 FROM node:15-alpine
 
