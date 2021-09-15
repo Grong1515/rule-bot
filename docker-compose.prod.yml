@@ -10,8 +10,8 @@ services:
     expose: 
       - 3000
     environment:
-      VIRTUAL_HOST: rules.dev.vgrong.com
-      LETSENCRYPT_HOST: rules.dev.vgrong.com
+      VIRTUAL_HOST: rules.vgrong.com
+      LETSENCRYPT_HOST: rules.vgrong.com
     networks:
       - global
 
