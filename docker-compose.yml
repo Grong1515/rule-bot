@@ -26,9 +26,6 @@ services:
       POSTGRES_DB: rules_dev
     volumes:
       - database-data:/var/lib/postgresql/data/
-      - ./dump1.sql:/var/dumps
-    ports: 
-      - 5432:5432
 
 volumes:
   database-data:
