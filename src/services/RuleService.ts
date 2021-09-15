@@ -1,14 +1,14 @@
-import {getConnection, getRepository} from 'typeorm';
-import Rule from '../entity/Rule';
-import Chat from '../interfaces/Chat';
-import Poll from '../entity/Poll';
+import {Rule} from '../entity/Rule';
+import {Poll} from '../entity/Poll';
 import EmptyValueException from '../exceptions/EmptyValueException';
 import { Message } from 'telegram-typings';
+import { Chat } from 'telegraf/typings/telegram-types';
+import { getOrm } from '../orm';
 
 
 export default class RuleService {
-  private readonly ruleRepository = getRepository(Rule);
-  private readonly pollRepository = getRepository(Poll);
+  private readonly ruleRepository = getOrm().em.getRepository(Rule);
+  private readonly pollRepository = getOrm().em.getRepository(Poll);
 
   async listChatRules(chat: Chat): Promise<Rule[]> {
     const rules = await this.ruleRepository.find({chat: chat.id, active: true});
@@ -27,7 +27,7 @@ export default class RuleService {
     poll.id = m.poll.id;
     poll.message = m.message_id;
     poll.chat = m.chat.id;
-    await this.pollRepository.save(poll);
+    await this.pollRepository.persistAndFlush(poll);
     return poll;
   }
 
