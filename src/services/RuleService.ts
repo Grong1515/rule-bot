@@ -11,7 +11,16 @@ export default class RuleService {
   private readonly pollRepository = getOrm().em.getRepository(Poll);
 
   async listChatRules(chat: Chat): Promise<Rule[]> {
-    const rules = await this.ruleRepository.find({chat: chat.id, active: true});
+    const rules = await this.ruleRepository.find(
+      {
+        chat: chat.id,
+        active: true
+      }, {
+        orderBy: {
+          id: 'ASC',
+        }
+      }
+    );
     return rules;
   }
 
